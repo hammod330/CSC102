@@ -1,0 +1,349 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PROJECTone
+{
+
+    public interface IDescription
+    {
+        
+       int ID { get; set; }
+       string NAME { get; set; } 
+
+        
+         string ToString();
+
+
+    }
+    public class Dept : IDescription
+    {
+        private int id;//department id
+        private string name;//STORE THE DEPARTMEN NAME
+        public Dept(int i, string n)
+        {
+            ID = i;
+            NAME = n;
+
+        }
+
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        public string NAME
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+
+    }
+    public class Faculty : IDescription
+    {
+        private int id;
+
+        private string name;
+
+
+        public Faculty(int Id, string Name)
+        {
+
+            id = Id;
+            name = Name;
+
+        }
+
+        public int ID
+        {
+
+            get { return id; }
+            set { id = value; }
+
+        }
+
+        public string NAME
+        {
+
+            get { return name; }
+            set { name = value; }
+
+        }
+
+        public override string ToString()
+        {
+
+            Console.WriteLine("the id of Faculty is : " + ID + " " + "the of Faculty name is : " + NAME);
+
+            return string.Empty;
+
+        }
+    }
+    public class DeptOfFaculty
+    {
+        private Faculty faculty;//store faculty object!!
+        private Dept[] depts = new Dept[5];
+        private int deptcounts = 0;//to store the total number of department in each faculty
+
+        public DeptOfFaculty(int u, string g, int s, string k)
+        {
+            //enter faculty id and the faculty name
+            faculty = new Faculty(u, g);
+            //enter department id and STORE THE DEPARTMEN NAME
+            for (int i = 0; i < 5; i++)
+            {
+                depts[i] = new Dept(s, k);
+                Console.WriteLine("there is   dep" + deptcounts);
+            }
+        }
+        public int getNumberofDepts()
+        {
+            deptcounts += depts.Length;
+            return deptcounts;
+        }
+        public Dept[] getDepts()
+        {
+
+            return depts;
+
+
+        }
+        public void addDept(Dept d)
+        {
+            depts[depts.Length] = d;
+
+
+        }
+        public override string ToString()
+        {
+
+
+            for (int i = 0; i < depts.Length; i++)
+            {
+                Console.WriteLine("the name of dept " + depts[i].NAME);
+            }
+            return "dep of faculty ";
+        }
+
+    }
+    public class Address
+    {
+        private string city;
+        private string streetNo;
+        public Address(string c, string s)
+        {
+            this.City = c;
+            this.Streetno = s;
+        }
+        public string City
+        {
+            get { return city; }
+            set { city = value; }
+        }
+        public string Streetno
+        {
+            get { return streetNo; }
+            set { streetNo = value; }
+        }
+
+        public override string ToString()
+        {
+            Console.WriteLine(City);
+            Console.WriteLine(Streetno); return "address";
+
+        }
+    }
+    public class Person : IDescription
+    {
+        private int id;
+
+        private string name;
+
+        private Address address;
+
+        public Person(int i, string n, string c, string cc)
+        {
+            this.ID = i;
+            this.NAME = n;
+            address = new Address(c, cc);
+        }
+
+
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+
+        public string NAME
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+
+        public override string ToString()
+        {
+            Console.WriteLine("person id is" + ID);
+            Console.WriteLine("person name is " + NAME);
+            Console.WriteLine("the city is " + address.City);
+            Console.WriteLine("Streetno is " + address.Streetno);
+
+
+            return "person";
+        }
+
+
+
+    }
+    public class Student : Person
+    {
+        private Faculty faculty;
+        private Dept dept;
+
+        private static int studentcount = 0;//store the total no student objects created.
+        public Student(int i, string n, string c, string cc) : base(i, n, c, cc)
+        {
+            faculty = new Faculty(i, n);
+            dept = new Dept(i, n);
+            studentcount++;
+        }
+        public static int StudentCount
+        { get { return studentcount; } }
+
+        public override string ToString()
+        {
+            Console.WriteLine("person id is  " + base.ID);
+            Console.WriteLine("persn name is  " + base.NAME);
+            Console.WriteLine("faculty name is  " + faculty.NAME);
+            Console.WriteLine("dept name is  " + dept.NAME);
+            Console.WriteLine("the number of student is  " + studentcount);
+            return "student";
+        }
+
+    }
+    public class Course
+    {
+
+        private string courseCode;
+        private string courseName;
+        private Student[] students = new Student[15];
+        private int numberOfStudents = 0;//store total NO of student registered for a specific course
+        public Course(string cc, string cn)
+        {
+            numberOfStudents++;// track number of students 
+            this.courseCode = cc;
+            this.courseName = cn;
+        }
+
+        public string coursecode
+        {
+            get { return courseCode; }
+            set { courseCode = value; }
+        }
+
+        public string coursename
+        {
+            get { return courseName; }
+            set { courseName = value; }
+        }
+
+        public int getNumberofStudents()
+        {
+
+            return numberOfStudents;
+        }
+
+        public Student[] getStudents()
+        {
+            return students;
+        }
+
+       
+
+        public void addStudent(Student s)
+        {
+            students[numberOfStudents] = s;
+
+        }
+
+        public override string ToString()
+        {
+            Console.WriteLine("courseCode is " + courseCode);
+            Console.WriteLine("courseName  " + courseName);
+            Console.WriteLine();
+            return "course";
+        }
+
+
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("ss");
+            Faculty[] f = new Faculty[2];
+            //add data to class Faculty
+            for (int i = 0; i < f.Length; i++)
+            {
+                Console.WriteLine("enter the id faculty then the name faculty");
+                f[i] = new Faculty(int.Parse(Console.ReadLine()), Console.ReadLine());
+                Console.WriteLine(f[i].ToString());
+            }
+
+
+            //add data to class Dept
+            Dept[] d1 = new Dept[2];//second and third
+            for (int i = 0; i < d1.Length; i++)
+            {
+                Console.WriteLine("enter the id dept then the name dept");
+                d1[i] = new Dept(int.Parse(Console.ReadLine()), Console.ReadLine());
+                //Console.WriteLine(d1[i].ToString()); //print data of the object
+            }
+
+
+            //create object with dept and faculty data
+
+            //Console.WriteLine("enter faculty id faculty name then dept id and dept name");
+            //DeptOfFaculty dp = new DeptOfFaculty(int.Parse(Console.ReadLine()), Console.ReadLine(),//fourth
+            //    int.Parse(Console.ReadLine()), Console.ReadLine());
+            //dp.ToString();//print data of the object
+
+            //creat three object 
+            Student[] s = new Student[4];
+            
+            for (int i = 0; i < 2; i++)
+            {
+                Console.WriteLine("enter id ,name,faculty name ,dept name ");
+                s[i] = new Student(int.Parse(Console.ReadLine()),
+                    Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
+                //s[i].ToString();//print data of the object
+            }
+
+            Course course1 = new Course("CSC102","COMPUTER ");//creat object of class course
+
+            course1.ToString();//print the data 
+
+            course1.addStudent(s[0]);//register  student 1 for a course
+            
+            course1.addStudent(s[1]);//register  student 2 for a course
+
+            Dept NewDEPT = new Dept(101, "engineering");
+            NewDEPT.ToString();//print the data
+            // the third student 
+            //add the dept we created NewDEPT and register for the course we created 
+            s[2] = new Student(101, "engineering", "CSC102", "COMPUTER");
+            s[2].ToString();//print th data 
+        }
+    }
+}
